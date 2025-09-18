@@ -1,0 +1,120 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{lipsum}
+\usepackage{geometry}
+\usepackage{hyperref}
+\geometry{margin=2.5cm}
+
+\title{Manual de la Biblioteca \texttt{Pingouin} en Python}
+\author{ }
+\date{ }
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introducción}
+La librería \texttt{Pingouin} es un paquete estadístico para Python, diseñado para facilitar el análisis de datos de manera intuitiva, clara y con funciones de alto nivel. Proporciona herramientas para estadística descriptiva, pruebas de hipótesis, medidas de efecto, correlaciones, ANOVAs, regresión y análisis de confiabilidad. Su enfoque está en ser ligera, fácil de usar y producir resultados listos para ser interpretados.
+
+\section{Características Generales}
+\begin{itemize}
+    \item Escrita en Python puro, sin dependencias pesadas.
+    \item Produce resultados en formato de tabla (\texttt{DataFrame}) de pandas.
+    \item Funciones de estadística avanzada integradas en pocas líneas de código.
+    \item Compatible con librerías como \texttt{NumPy}, \texttt{SciPy} y \texttt{pandas}.
+    \item Resultados listos para informes científicos (incluyendo valores p, intervalos de confianza y tamaños de efecto).
+\end{itemize}
+
+\section{Funciones Principales por Categoría}
+
+\subsection{1. Estadísticos Descriptivos}
+\begin{itemize}
+    \item \texttt{pg.describe()}: genera estadísticas descriptivas de un conjunto de datos, como media, desviación estándar, error estándar, intervalo de confianza, asimetría y curtosis.
+    \item \textbf{Ejemplo:}
+    \begin{verbatim}
+    pg.describe(data, dv='Nota', group='Grupo')
+    \end{verbatim}
+    \textbf{Resultados:} tamaño de la muestra, media, desviación típica, IC95\%, asimetría y curtosis por grupo.
+\end{itemize}
+
+\subsection{2. Pruebas de Normalidad y Homogeneidad}
+\begin{itemize}
+    \item \texttt{pg.normality()}: aplica la prueba de Shapiro-Wilk u otras pruebas para verificar si los datos siguen una distribución normal.
+    \item \texttt{pg.homoscedasticity()}: realiza la prueba de Levene o Bartlett para comprobar la igualdad de varianzas entre grupos.
+    \item \textbf{Ejemplo:}
+    \begin{verbatim}
+    pg.normality(data, dv='Nota', group='Grupo')
+    pg.homoscedasticity(data, dv='Nota', group='Grupo')
+    \end{verbatim}
+\end{itemize}
+
+\subsection{3. Pruebas de Hipótesis}
+\begin{itemize}
+    \item \texttt{pg.ttest()}: prueba t de Student para muestras independientes o relacionadas, con opción de corrección de Welch.
+    \item \texttt{pg.mwu()}: prueba de Mann-Whitney U (alternativa no paramétrica a la t-test).
+    \item \texttt{pg.anova()}: análisis de varianza de un factor.
+    \item \texttt{pg.pairwise\_ttests()}: comparaciones múltiples con corrección por error tipo I.
+    \item \textbf{Ejemplo:}
+    \begin{verbatim}
+    pg.ttest(dataA, dataB, correction='auto')
+    \end{verbatim}
+\end{itemize}
+
+\subsection{4. Medidas de Efecto}
+\begin{itemize}
+    \item \texttt{pg.compute\_effsize()}: calcula el tamaño del efecto entre dos grupos (Cohen’s d, Hedges’ g, Glass’ delta, etc.).
+    \item \texttt{pg.partial\_eta\_sq()}: calcula el eta cuadrado parcial para ANOVA.
+    \item \textbf{Ejemplo:}
+    \begin{verbatim}
+    pg.compute_effsize(dataA, dataB, eftype='cohen')
+    \end{verbatim}
+\end{itemize}
+
+\subsection{5. Correlaciones}
+\begin{itemize}
+    \item \texttt{pg.corr()}: calcula la correlación entre dos variables con diferentes métodos (Pearson, Spearman, Kendall).
+    \item \texttt{pg.partial\_corr()}: correlación parcial controlando variables adicionales.
+    \item \texttt{pg.rcorr()}: calcula una matriz completa de correlaciones.
+    \item \textbf{Ejemplo:}
+    \begin{verbatim}
+    pg.corr(data['X'], data['Y'], method='pearson')
+    \end{verbatim}
+\end{itemize}
+
+\subsection{6. ANOVA y Modelos Lineales}
+\begin{itemize}
+    \item \texttt{pg.anova()}: ANOVA de un factor o de medidas repetidas.
+    \item \texttt{pg.rm\_anova()}: ANOVA de medidas repetidas.
+    \item \texttt{pg.mixed\_anova()}: ANOVA de medidas mixtas (intra e inter sujetos).
+    \item \textbf{Ejemplo:}
+    \begin{verbatim}
+    pg.anova(data=data, dv='Nota', between='Grupo')
+    \end{verbatim}
+\end{itemize}
+
+\subsection{7. Fiabilidad y Consistencia}
+\begin{itemize}
+    \item \texttt{pg.cronbach\_alpha()}: calcula el alfa de Cronbach para medir consistencia interna.
+    \item \texttt{pg.intraclass\_corr()}: calcula la correlación intraclase para fiabilidad entre evaluadores.
+    \item \textbf{Ejemplo:}
+    \begin{verbatim}
+    pg.cronbach_alpha(data)
+    \end{verbatim}
+\end{itemize}
+
+\subsection{8. Otras Funcionalidades Útiles}
+\begin{itemize}
+    \item \texttt{pg.rm\_corr()}: correlación de medidas repetidas.
+    \item \texttt{pg.logistic\_regression()}: regresión logística.
+    \item \texttt{pg.linear\_regression()}: regresión lineal simple o múltiple.
+    \item \texttt{pg.power\_ttest()}: cálculo de potencia estadística en pruebas t.
+    \item \texttt{pg.multicomp()}: corrección de comparaciones múltiples (Bonferroni, Holm, FDR, etc.).
+\end{itemize}
+
+\section{Conclusiones}
+La librería \texttt{Pingouin} concentra en un solo paquete las funciones estadísticas más comunes para la investigación científica. Su diseño orientado a \texttt{pandas} y la facilidad de obtener resultados en tablas lo convierten en una herramienta ideal para psicología, neurociencia, biología, educación y áreas aplicadas que requieran análisis estadístico claro y reproducible.
+
+\end{document}
